@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Get Location & Open Map</title>
+<style>
+  body {
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+  }
+  .globe {
+    width: 100px;
+    height: 100px;
+    margin: 20px auto;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Globe_icon.svg/1024px-Globe_icon.svg.png') no-repeat center;
+    background-size: contain;
+  }
+  button {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #0056b3;
+  }
+</style>
+</head>
+<body>
+
+<h1>Temukan Lokasi Anda</h1>
+<div class="globe"></div>
+
+<button onclick="getLocation()">Get</button>
+
+<script>
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+      alert("Browser Anda tidak mendukung Geolocation.");
+    }
+  }
+
+  function showPosition(position) {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+    const link = `https://www.google.com/maps?q=${lat},${lon}`;
+    window.location.href = link;
+  }
+
+  function showError(error) {
+    switch(error.code) {
+      case error.PERMISSION_DENIED:
+        alert("Izin lokasi ditolak.");
+        break;
+      case error.POSITION_UNAVAILABLE:
+        alert("Informasi lokasi tidak tersedia.");
+        break;
+      case error.TIMEOUT:
+        alert("Permintaan lokasi timeout.");
+        break;
+      default:
+        alert("Terjadi kesalahan yang tidak diketahui.");
+        break;
+    }
+  }
+</script>
+
+</body>
+</html>
